@@ -27,7 +27,7 @@
                 android:layout_height="46dp"
                 android:layout_marginTop="15dp"
                 android:layout_weight="1"
-                android:background="#A9F158"
+                android:background="#A1A1A1"
                 android:paddingTop="8dp"
                 android:text="CONSULTAR PERSONAL"
                 android:textAlignment="center"
