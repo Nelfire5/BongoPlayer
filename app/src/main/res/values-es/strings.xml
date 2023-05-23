@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">BongoPlayer</string>
+    <string name="app_name">BongoPlayer</string>
     <string name="title_home">Inicio</string>
     <string name="title_dashboard">Música</string>
     <string name="title_notifications">Configuración</string>

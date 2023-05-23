@@ -36,45 +36,84 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:background="#FFFFFF"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/nav_view"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <ImageButton
-            android:id="@+id/imageButton1"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_media_previous"
-            tools:layout_editor_absoluteX="134dp"
-            tools:layout_editor_absoluteY="78dp" />
+            android:layout_gravity="right"
+            android:orientation="vertical"
+            android:padding="2dp">
 
-        <ImageButton
-            android:id="@+id/imageButton2"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ejemplo"
+                android:textColor="@color/black"
+                android:textSize="20dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Artista"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_media_play"
-            tools:layout_editor_absoluteX="134dp"
-            tools:layout_editor_absoluteY="78dp" />
+            android:orientation="horizontal"
+            android:layout_marginLeft="130dp"
+            >
 
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_media_pause"
-            tools:layout_editor_absoluteX="134dp"
-            tools:layout_editor_absoluteY="78dp" />
+            <ImageButton
+                android:id="@+id/bucle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparente"
+                android:onClick="repetir"
+                android:padding="10dp"
+                app:srcCompat="@drawable/repetiroff"
+                tools:layout_editor_absoluteX="134dp"
+                tools:layout_editor_absoluteY="78dp" />
 
-        <ImageButton
-            android:id="@+id/imageButton4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_media_next"
-            tools:layout_editor_absoluteX="134dp"
-            tools:layout_editor_absoluteY="78dp" />
+            <ImageButton
+                android:id="@+id/buttonPlayPause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparente"
+                android:onClick="playPause"
+                android:padding="10dp"
+                app:srcCompat="@drawable/play"
+                tools:layout_editor_absoluteX="134dp"
+                tools:layout_editor_absoluteY="78dp" />
 
+            <ImageButton
+                android:id="@+id/buttonAnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparente"
+                android:onClick="anterior"
+                android:padding="10dp"
+                app:srcCompat="@drawable/atras"
+                tools:layout_editor_absoluteX="134dp"
+                tools:layout_editor_absoluteY="78dp" />
+
+            <ImageButton
+                android:id="@+id/buttonSig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparente"
+                android:onClick="siguiente"
+                android:padding="10dp"
+                app:srcCompat="@drawable/siguiente"
+                tools:layout_editor_absoluteX="134dp"
+                tools:layout_editor_absoluteY="78dp" />
+
+        </LinearLayout>
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
