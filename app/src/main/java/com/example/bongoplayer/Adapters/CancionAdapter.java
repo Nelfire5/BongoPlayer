@@ -41,8 +41,14 @@ public class CancionAdapter  extends RecyclerView.Adapter<CancionAdapter.ViewHol
     @Override
     public void onBindViewHolder(@NonNull CancionAdapter.ViewHolder holder, int position) {
         holder.bindData(lista.get(position));
-    }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
+
+    }
 
     @Override
     public int getItemCount() {
@@ -64,7 +70,7 @@ public class CancionAdapter  extends RecyclerView.Adapter<CancionAdapter.ViewHol
         }
 
         void bindData(final Cancion item){
-            cancion.setText(item.getTitulo());
+            cancion.setText(item.getNombre());
             artista.setText(item.getArtista());
         }
     }

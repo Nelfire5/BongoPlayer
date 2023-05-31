@@ -1,61 +1,96 @@
 package com.example.bongoplayer.Models;
 
 import android.media.Image;
+import android.media.MediaPlayer;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 
-public class Cancion {
-    private String titulo;
+import java.io.Serializable;
+
+public class Cancion implements Serializable {
+
+    private String id;
+    private String nombre;
     private String artista;
-    private int duracion;
+    private String album;
+    private String duracion;
+    private String ruta;
 
-    private MediaStore.Audio.Media mp3;
+    public Cancion() {
+    }
 
-    public Cancion(String titulo, String artista, int duracion, MediaStore.Audio.Media mp3) {
-        this.titulo = titulo;
+    public Cancion(String nombre,String artista)
+    {
+        this.nombre = nombre;
         this.artista = artista;
+    }
+    public Cancion(String id, String nombre, String artista, String album, String duracion, String ruta) {
+        this.id = id;
+        this.nombre = nombre;
+        this.artista = artista;
+        this.album = album;
         this.duracion = duracion;
-        this.mp3 = mp3;
+        this.ruta = ruta;
     }
 
-    public Cancion(String titulo, String artista) {
-        this.titulo = titulo;
-        this.artista = artista;
+    public String getId() {
+        return id;
     }
 
-    public Cancion(MediaStore.Audio.Media mp3) {
-        this.mp3 = mp3;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getArtista() {
         return artista;
     }
 
-    public int getDuracion() {
-        return duracion;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
     public void setArtista(String artista) {
         this.artista = artista;
     }
 
-    public void setDuracion(int duracion) {
+    public String getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(String album) {
+        this.album = album;
+    }
+
+    public String getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(String duracion) {
         this.duracion = duracion;
     }
 
-    public MediaStore.Audio.Media getMp3() {
-        return mp3;
+    public String getRuta() {
+        return ruta;
     }
 
-    public void setMp3(MediaStore.Audio.Media mp3) {
-        this.mp3 = mp3;
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
+    }
+
+    @Override
+    public String toString() {
+        return "Cancion{" +
+                "id='" + id + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", artista='" + artista + '\'' +
+                ", album='" + album + '\'' +
+                ", duracion='" + duracion + '\'' +
+                ", ruta='" + ruta + '\'' +
+                '}';
     }
 }
 

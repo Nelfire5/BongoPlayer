@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'com.example.bongoplayer'
-    compileSdk 33
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.example.bongoplayer"
-        minSdk 24
-        targetSdk 33
+        minSdk 29
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 

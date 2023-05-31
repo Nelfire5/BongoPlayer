@@ -33,56 +33,52 @@
         app:layout_constraintVertical_bias="1.0"
         app:navGraph="@navigation/mobile_navigation" />
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#808E8E8E"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/nav_view"
-        android:background="#65DCDCDC">
+        >
 
-        <!-- Texto de la canción -->
-        <TextView
-            android:id="@+id/txtCancion"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:text="Nombre"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:padding="5dp"
-            android:ellipsize="marquee"
-            android:focusable="false"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="true"/>
-
-        <!-- Texto del artista -->
-        <TextView
-            android:id="@+id/txtArtista"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:text="Artista"
-            android:textSize="12sp"
-            android:textColor="@color/black"
-            android:layout_alignParentStart="true"
-            android:layout_below="@id/txtCancion"
-            android:padding="5dp"
-            android:ellipsize="marquee"
-            android:focusable="false"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="true"/>
-
-        <!-- Controles de reproducción -->
         <LinearLayout
-            android:id="@+id/controlLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="2dp"
+            android:padding="2dp"
+
+            >
+
+            <TextView
+                android:id="@+id/txtCancion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:focusable="false"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="Cancion"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/txtArtista"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Artista"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp">
+            >
 
             <ImageButton
                 android:id="@+id/bucle"
@@ -127,24 +123,8 @@
                 app:srcCompat="@drawable/siguiente"
                 tools:layout_editor_absoluteX="134dp"
                 tools:layout_editor_absoluteY="78dp" />
+
         </LinearLayout>
-
-        <!-- Barra de progreso -->
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:progress="0"
-            android:max="100"
-            android:progressTint="@color/teal_200"
-            android:thumbTint="@color/black"
-            android:thumb="@color/black"
-            android:layout_below="@id/controlLayout"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp" />
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
