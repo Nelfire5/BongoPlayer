@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        posicion=0;
         Log.e("vector",vectormp.toString());
         playPausa = findViewById(R.id.buttonPlayPause);
         sig = findViewById(R.id.buttonSig);
@@ -124,6 +125,14 @@ public class MainActivity extends AppCompatActivity {
         txtNombre.setSelected(true);
 
         seekBar.setMax(vectormp.get(posicion).getDuration());
+
+        playPausa.setOnClickListener(view -> {
+            try {
+                playPause(view);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 //----------------
 /*        Conexion x = new Conexion(15);
         x.run();*/

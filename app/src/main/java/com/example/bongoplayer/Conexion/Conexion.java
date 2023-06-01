@@ -1,6 +1,9 @@
 package com.example.bongoplayer.Conexion;
 
+import android.content.Intent;
 import android.util.Log;
+
+import com.example.bongoplayer.RegisterActivity;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -16,29 +19,10 @@ public class Conexion extends Thread{
     private Object objeto;
     private int pk;
     private int Accion;
-
-    public static final int INSERTAR_USUARIO = 1;
-    public static final int ELIMINAR_USUARIO = 2;
-    public static final int MODIFICAR_USUARIO = 3;
-    public static final int LEER_USUARIO = 4;
-    public static final int LEER_USUARIOS = 5;
-
-    public static final int INSERTAR_LISTA = 6;
-    public static final int ELIMINAR_LISTA = 7;
-    public static final int MODIFICAR_LISTA = 8;
-    public static final int LEER_LISTA = 9;
-    public static final int LEER_LISTAS = 10;
-
-    public static final int INSERTAR_CANCION = 11;
-    public static final int ELIMINAR_CANCION = 12;
-    public static final int MODIFICAR_CANCION = 13;
-    public static final int LEER_CANCION = 14;
-    public static final int LEER_CANCIONES = 15;
     //-------------------------------------------
 
 
-    public Conexion(int accion) {
-        Accion = accion;
+    public Conexion() {
     }
 
     public Conexion(Object objeto, int accion) {
@@ -53,6 +37,10 @@ public class Conexion extends Thread{
         this.objeto = objeto;
         this.pk = pk;
         this.Accion = accion;
+    }
+
+    public Conexion(Object objeto) {
+        this.objeto = objeto;
     }
 
     public Object getObjeto() {
@@ -81,51 +69,22 @@ public class Conexion extends Thread{
 
     //-----------------------------------------------------------------
 
+
     @Override
-    public void run(){
+    public void run() {
         super.run();
-        Conexion cliente = new Conexion(getAccion());
+
         try {
+            int ra = insertarUsuario((Usuario) getObjeto());
 
-            switch (cliente.getAccion()){
-                case INSERTAR_USUARIO:
-                    Integer usuarios = cliente.insertarUsuario((Usuario) cliente.getObjeto());
-                    Log.e("sssssss","Registros Afectados: "+ usuarios);
-                    break;
-                case ELIMINAR_USUARIO:
-                    Log.e("xxxxxx", "HOLAAAAAAAAAAAAA");
-                case MODIFICAR_USUARIO:
-                    break;
-                case LEER_USUARIO:
-                    Usuario user = cliente.leerUsuario(1);
-                    Log.e("xxxxxx", user.toString());
-                    break;
-                case LEER_USUARIOS:
-                case 6:
-                    break;
 
-                case 7:
-                case 8:
-                case 9:
-                case 10:
-                case 11:
-                case 12:
-                case 13:
-                case LEER_CANCION:
-                case LEER_CANCIONES:
-                    ArrayList<Cancion> canciones = cliente.leerCanciones();
-                    Log.e("xxxxxxxx", canciones.toString());
-                    break;
-            }
-        } catch (ExcepcionBP ex) {
-            System.out.println(ex);
-            Log.e("xxxxx",ex.toString());
-        } catch (ExcepcionBPComunicaciones e) {
+        } catch (ExcepcionBP e) {
             throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (ExcepcionBPComunicaciones e) {
             throw new RuntimeException(e);
         }
     }
+
     public Integer insertarUsuario(Usuario usuario) throws ExcepcionBP, ExcepcionBPComunicaciones {
 
         try {

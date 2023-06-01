@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".RegisterActivity"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/txtUserName"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:hint="Nombre Usuario"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/txtApellido1"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:hint="Primer Apellido"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/txtApellido2"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:hint="Segundo Apellido"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/txtEmail"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:hint="Email"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/txtPass"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp" />
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="151dp"
+        android:layout_height="151dp"
+        android:layout_gravity="left"
+        android:layout_margin="15dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+
+    <EditText
+        android:id="@+id/txtAlias"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:hint="Alias"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="REGISTRAR"
+        android:textSize="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+     />
+
+    <TextView
+        android:id="@+id/link_to_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Ya tienes cuenta! Accede!"
+        android:gravity="center_horizontal"
+        android:textSize="20dp"
+        android:textColor="#0b84aa"/>
+
+    <TextView
+        android:id="@+id/register_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:gravity="center_horizontal"
+        android:textSize="20dp"
+        android:textColor="#F44336"/>
+
+
+</LinearLayout>

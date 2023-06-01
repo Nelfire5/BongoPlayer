@@ -1,75 +1,262 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
     tools:context=".RegisterActivity"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/txtUserName"
-        android:layout_height="wrap_content"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_marginTop="35dp"
-        android:hint="UserName"
-        android:inputType="text" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/txtEmail"
-        android:layout_marginTop="15dp"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/txtPass"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="30dp" />
+            <EditText
+                android:id="@+id/editTextNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/campo1"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/editTextApellido1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/campo2"
+                android:inputType="textPersonName"
+                android:layout_marginTop="5dp"/>
+
+            <EditText
+                android:id="@+id/editTextApellido2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/campo3"
+                android:inputType="textPersonName"
+                android:layout_marginTop="5dp"/>
+
+            <EditText
+                android:id="@+id/editTextCorreo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/campo4"
+                android:inputType="textEmailAddress"
+                android:layout_marginTop="5dp"/>
+
+            <EditText
+                android:id="@+id/editTextContraseña"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/campo5"
+                android:inputType="textPassword"
+                android:layout_marginTop="5dp"/>
+
+            <EditText
+                android:id="@+id/editTextConfirmarContraseña"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/campo6"
+                android:inputType="textPassword"
+                android:layout_marginTop="5dp"/>
+
+            <EditText
+                android:id="@+id/editTextAlias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/campo7"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextAlias"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:text="Elige tu imagen de perfil"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/imageViewIcono"
+                android:layout_width="wrap_content"
+                android:layout_height="130dp"
+                android:padding="10dp"
+                android:layout_below="@id/text"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/user"
+                android:background="#E1E1E1" />
+
+            <Button
+                android:id="@+id/buttonRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageViewIcono"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="45dp"
+                android:text="Registrarse"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/black" />
+
+            <TextView
+                android:id="@+id/link_to_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/buttonRegistro"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="Ya tienes cuenta! Accede!"
+                android:textSize="18dp"
+                android:textColor="#0b84aa"/>
 
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="151dp"
-        android:layout_height="151dp"
-        android:layout_gravity="left"
-        android:layout_margin="15dp"
-        tools:srcCompat="@tools:sample/avatars" />
+            <TextView
+                android:id="@+id/campo1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Nombre: "
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="REGISTRAR"
-        android:textSize="20dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp"
-     />
+            <TextView
+                android:id="@+id/obligatorio1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/campo1"
+                android:layout_alignTop="@+id/campo1"
+                android:text="*"
+                android:textColor="#FF0000"
+                android:textSize="15sp" />
 
-    <TextView
-        android:id="@+id/link_to_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Ya tienes cuenta! Accede!"
-        android:gravity="center_horizontal"
-        android:textSize="20dp"
-        android:textColor="#0b84aa"/>
+            <TextView
+                android:id="@+id/campo2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextNombre"
+                android:layout_marginTop="10dp"
+                android:text="Primer Apellido: "
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/register_error"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:gravity="center_horizontal"
-        android:textSize="20dp"
-        android:textColor="#F44336"/>
+            <TextView
+                android:id="@+id/obligatorio2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/campo2"
+                android:layout_alignTop="@+id/campo2"
+                android:text="*"
+                android:textColor="#FF0000"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/campo3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextApellido1"
+                android:layout_marginTop="10dp"
+                android:text="Segundo Apellido: "
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/campo4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextApellido2"
+                android:layout_marginTop="10dp"
+                android:text="Correo: "
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/obligatorio3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/campo4"
+                android:layout_alignTop="@+id/campo4"
+                android:text="*"
+                android:textColor="#FF0000"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/campo5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextCorreo"
+                android:layout_marginTop="10dp"
+                android:text="Contraseña: "
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/campo6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextContraseña"
+                android:layout_marginTop="10dp"
+                android:text="Confirmar la Contraseña: "
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/campo7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextConfirmarContraseña"
+                android:layout_marginTop="10dp"
+                android:text="Alias: "
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="20sp" />
 
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/obligatorio4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/campo5"
+                android:layout_alignTop="@+id/campo5"
+                android:text="*"
+                android:textColor="#FF0000"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/obligatorio5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/campo6"
+                android:layout_alignTop="@+id/campo6"
+                android:text="*"
+                android:textColor="#FF0000"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/obligatorio6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/campo7"
+                android:layout_alignTop="@+id/campo7"
+                android:text="*"
+                android:textColor="#FF0000"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
