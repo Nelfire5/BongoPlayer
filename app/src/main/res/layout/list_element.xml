@@ -19,7 +19,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/imgCaratula"
@@ -33,11 +33,11 @@
 
             <TextView
                 android:id="@+id/txtCancion"
-                android:layout_width="wrap_content"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:text="Cancion"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:layout_marginStart="130dp"
                 android:layout_marginTop="30dp" />
@@ -51,26 +51,8 @@
                 android:textSize="10sp"
                 android:textStyle="bold"
                 android:layout_marginStart="130dp"
-                android:layout_marginTop="65dp"/>
+                android:layout_marginTop="80dp"/>
 
-            <ImageButton
-                android:id="@+id/imageButtonInfo"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/options"
-                android:background="@color/transparente"
-                android:layout_marginStart="310dp"
-                android:layout_marginTop="30dp"
-                />
-
-            <ImageButton
-                android:id="@+id/imageButtonOptions"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/favorito"
-                android:background="@color/transparente"
-                android:layout_marginStart="280dp"
-                android:layout_marginTop="30dp"/>
         </RelativeLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

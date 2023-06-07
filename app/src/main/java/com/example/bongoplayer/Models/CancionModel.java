@@ -1,13 +1,8 @@
 package com.example.bongoplayer.Models;
 
-import android.media.Image;
-import android.media.MediaPlayer;
-import android.os.Parcelable;
-import android.provider.MediaStore;
-
 import java.io.Serializable;
 
-public class Cancion implements Serializable {
+public class CancionModel implements Serializable {
 
     private String id;
     private String nombre;
@@ -16,15 +11,15 @@ public class Cancion implements Serializable {
     private String duracion;
     private String ruta;
 
-    public Cancion() {
+    public CancionModel() {
     }
 
-    public Cancion(String nombre,String artista)
+    public CancionModel(String nombre, String artista)
     {
         this.nombre = nombre;
         this.artista = artista;
     }
-    public Cancion(String id, String nombre, String artista, String album, String duracion, String ruta) {
+    public CancionModel(String id, String nombre, String artista, String album, String duracion, String ruta) {
         this.id = id;
         this.nombre = nombre;
         this.artista = artista;
@@ -83,7 +78,7 @@ public class Cancion implements Serializable {
 
     @Override
     public String toString() {
-        return "Cancion{" +
+        return "CancionModel{" +
                 "id='" + id + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", artista='" + artista + '\'' +

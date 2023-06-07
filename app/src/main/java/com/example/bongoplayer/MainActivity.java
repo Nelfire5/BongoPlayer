@@ -3,35 +3,26 @@ package com.example.bongoplayer;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bongoplayer.Adapters.FileAdapter;
 import com.example.bongoplayer.Conexion.Conexion;
-import com.example.bongoplayer.Models.Cancion;
-import com.example.bongoplayer.ui.dashboard.DashboardFragment;
+import com.example.bongoplayer.Models.CancionModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -42,21 +33,23 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.bongoplayer.databinding.ActivityMainBinding;
 
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import bongoplayerpojo.Cancion;
+import bongoplayerpojo.ExcepcionBP;
+import bongoplayerpojocomunicaciones.ExcepcionBPComunicaciones;
 
 
 public class MainActivity extends AppCompatActivity {
 
     ImageButton playPausa,sig,ant,bucle;
-    int repetir=2,posicion;
+    int repetir=2,posicion, segundo;
 
     ArrayList<MediaPlayer> vectormp = new ArrayList<>();
-    ArrayList<Cancion> canciones = new ArrayList<>();
+    ArrayList<CancionModel> canciones = new ArrayList<>();
     private ActivityMainBinding binding;
     private static final int REQUEST_PERMISSION = 1;
 
@@ -87,28 +80,21 @@ public class MainActivity extends AppCompatActivity {
 
         checkPermissionAndListFiles();
 
-        DashboardFragment dashboardFragment = new DashboardFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("canciones",canciones);
-        dashboardFragment.setArguments(bundle);
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.navigation_dashboard, dashboardFragment)
-                .commit();
-
         for(int i=0; i<canciones.size();i++)
         {
             try {
                 MediaPlayer x = new MediaPlayer();
                 x.setDataSource(canciones.get(i).getRuta());
                 vectormp.add(x);
+                vectormp.get(i).prepare();
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
 
-        posicion=0;
-        Log.e("vector",vectormp.toString());
+        //new hiloSubircanciones().execute();
+
         playPausa = findViewById(R.id.buttonPlayPause);
         sig = findViewById(R.id.buttonSig);
         ant = findViewById(R.id.buttonAnt);
@@ -126,38 +112,81 @@ public class MainActivity extends AppCompatActivity {
 
         seekBar.setMax(vectormp.get(posicion).getDuration());
 
-        playPausa.setOnClickListener(view -> {
-            try {
-                playPause(view);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-//----------------
-/*        Conexion x = new Conexion(15);
-        x.run();*/
+
+        new hiloreproductor().execute();
     }
 
+    public class hiloreproductor extends AsyncTask<String,Void,Void> {
+        @Override
+        protected Void doInBackground(String... strings) {
 
-    public void playPause(View view) throws IOException {
-        if(vectormp.get(posicion).isPlaying())
-        {
-            vectormp.get(posicion).pause();
-            playPausa.setImageResource(R.drawable.play);
-            Toast.makeText(this, "Pausa", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            vectormp.get(posicion).prepare();
-            vectormp.get(posicion).start();
-            playPausa.setImageResource(R.drawable.pausa);
-            Toast.makeText(this, "Play", Toast.LENGTH_SHORT).show();
-            UpdateSeekBar updateSeekBar = new UpdateSeekBar();
-            handler.post(updateSeekBar);
+            playPausa.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try {
+                        if(vectormp.get(posicion).isPlaying())
+                        {
+                            pausa(view);
+                        } else{
+                            play(view);
+                        }
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
+            });
+
+            bucle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    repetir(view);
+                }
+            });
+
+            sig.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try {
+                        siguiente(view);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            ant.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try {
+                        anterior(view);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+
+            return null;
         }
     }
 
-    public void repetir(View view) throws IOException {
+    public void play(View view) throws IOException {
+
+        vectormp.get(posicion).start();
+        playPausa.setImageResource(R.drawable.pausa);
+        Toast.makeText(this, "Play", Toast.LENGTH_SHORT).show();
+        UpdateSeekBar updateSeekBar = new UpdateSeekBar();
+        handler.post(updateSeekBar);
+    }
+
+    public void pausa(View view)
+    {
+        vectormp.get(posicion).pause();
+        playPausa.setImageResource(R.drawable.play);
+        Toast.makeText(this, "Pausa", Toast.LENGTH_SHORT).show();
+    }
+
+    public void repetir(View view) {
         if(repetir == 1)
         {
             bucle.setImageResource(R.drawable.repetiroff);
@@ -179,7 +208,6 @@ public class MainActivity extends AppCompatActivity {
             if(vectormp.get(posicion).isPlaying()){
                 vectormp.get(posicion).stop();
                 posicion ++;
-                vectormp.get(posicion).prepare();
                 vectormp.get(posicion).start();
                 txtNombre.setText(canciones.get(posicion).getNombre());
                 txtArtista.setText(canciones.get(posicion).getArtista());
@@ -196,7 +224,6 @@ public class MainActivity extends AppCompatActivity {
                 posicion = 0;
                 vectormp.get(posicion).stop();
                 posicion ++;
-                vectormp.get(posicion).prepare();
                 vectormp.get(posicion).start();
                 txtNombre.setText(canciones.get(posicion).getNombre());
                 txtArtista.setText(canciones.get(posicion).getArtista());
@@ -227,11 +254,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else{
-            Toast.makeText(this, "No hay mas ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Es la primera ", Toast.LENGTH_SHORT).show();
             posicion = vectormp.size();
         }
     }
-
 
     private void checkPermissionAndListFiles() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -262,12 +288,11 @@ public class MainActivity extends AppCompatActivity {
 
             SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
             String string_duracion = sdf.format(new Date(duracion));
-            Cancion cancion = new Cancion(string_id, nombre, artista, album, string_duracion, ruta);
+            CancionModel cancionModel = new CancionModel(string_id, nombre, artista, album, string_duracion, ruta);
 
-            if(cancion.getRuta().endsWith(".mp3"))
+            if(cancionModel.getRuta().endsWith(".mp3"))
             {
-                Log.e("cancion",cancion.toString());
-                canciones.add(cancion);
+                canciones.add(cancionModel);
             }
         }
     }
@@ -290,6 +315,38 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
             seekBar.setProgress(vectormp.get(posicion).getCurrentPosition());
             handler.postDelayed(this,100);
+        }
+    }
+
+    public class hiloSubircanciones extends AsyncTask<String,Void,Void> {
+
+        @Override
+        protected Void doInBackground(String... strings) {
+
+            try {
+                Conexion conexion = new Conexion();
+
+                Cancion cancion = new Cancion();
+
+                for(int i=0; i<canciones.size();i++)
+                {
+                    cancion.setNombre(canciones.get(i).getNombre());
+                    cancion.setArtista(canciones.get(i).getArtista());
+                    cancion.setDuracion(canciones.get(i).getDuracion());
+                    cancion.setArchivo(canciones.get(i).getRuta());
+
+                    Log.e("cancion subir",cancion.toString());
+                    conexion.insertarCancion(cancion);
+
+                }
+            } catch (NumberFormatException e) {
+                throw new RuntimeException(e);
+            } catch (ExcepcionBP e) {
+                throw new RuntimeException(e);
+            } catch (ExcepcionBPComunicaciones e) {
+                throw new RuntimeException(e);
+            }
+            return null;
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.example.bongoplayer.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,24 +11,29 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bongoplayer.Models.Cancion;
+import com.example.bongoplayer.Models.CancionModel;
 import com.example.bongoplayer.R;
-import com.example.bongoplayer.ui.dashboard.DashboardFragment;
 
 import java.util.List;
 
 public class CancionAdapter  extends RecyclerView.Adapter<CancionAdapter.ViewHolder> {
 
-    private List<Cancion> lista;
+    private List<CancionModel> lista;
     private LayoutInflater inflater;
     private Context context;
 
-    public CancionAdapter(List<Cancion> lista, Context context) {
+    private OnItemClickListener value;
+
+
+    public interface OnItemClickListener {
+        void onItemClick(CancionModel cancionModel);
+    }
+    public CancionAdapter(List<CancionModel> lista, Context context, OnItemClickListener value) {
         this.inflater = LayoutInflater.from(context);
         this.lista = lista;
         this.context = context;
+        this.value = value;
     }
-
 
     @NonNull
     @Override
@@ -39,12 +44,12 @@ public class CancionAdapter  extends RecyclerView.Adapter<CancionAdapter.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CancionAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CancionAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.bindData(lista.get(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View v) {
+                value.onItemClick(lista.get(position));
             }
         });
 
@@ -55,7 +60,7 @@ public class CancionAdapter  extends RecyclerView.Adapter<CancionAdapter.ViewHol
         return lista.size();
     }
 
-    public void setItems(List<Cancion> item){ lista = item;}
+    public void setItems(List<CancionModel> item){ lista = item;}
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -67,11 +72,13 @@ public class CancionAdapter  extends RecyclerView.Adapter<CancionAdapter.ViewHol
             iconImage = itemView.findViewById(R.id.imgCaratula);
             cancion = itemView.findViewById(R.id.txtCancion);
             artista = itemView.findViewById(R.id.txtArtista);
+
         }
 
-        void bindData(final Cancion item){
+        void bindData(final CancionModel item){
             cancion.setText(item.getNombre());
             artista.setText(item.getArtista());
+
         }
     }
 }

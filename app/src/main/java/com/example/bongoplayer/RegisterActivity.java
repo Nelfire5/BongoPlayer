@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,9 +38,9 @@ public class RegisterActivity extends AppCompatActivity {
     private ImageView imageViewIcono;
     private EditText editTextAlias;
     private Button buttonRegistro;
-
     Usuario usuario = new Usuario();
-    HiloRegistrar hilo = new HiloRegistrar();
+    int ra = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,16 +74,20 @@ public class RegisterActivity extends AppCompatActivity {
                 if(contraseña.equals("") || confirmarContraseña.equals("") || nombre.equals("") || apellido1.equals("") || correo.equals("") || alias.equals(""))
                 {
                     Toast.makeText(RegisterActivity.this, "Los campos marcados con (*) son obligatorios", Toast.LENGTH_SHORT).show();
-                    return;
+                    return ;
                 }
                 if(!correo.contains("@") || !correo.contains("."))
                 {
                     Toast.makeText(RegisterActivity.this, "El correo no es valido", Toast.LENGTH_SHORT).show();
-                    return;
+                    return ;
                 }
                 if (!contraseña.equals(confirmarContraseña) ) {
                     Toast.makeText(RegisterActivity.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
-                    return;
+                    return ;
+                }
+                if (contraseña.length() < 7) {
+                    Toast.makeText(RegisterActivity.this, "La contraseña debe tener mas de 8 caracteres", Toast.LENGTH_SHORT).show();
+                    return ;
                 }
 
                 usuario.setNombreUsuario((nombre));
@@ -93,8 +98,17 @@ public class RegisterActivity extends AppCompatActivity {
                 usuario.setAlias((alias));
 
                 Log.e("user",usuario.toString());
+
+                ra = 1;
+
+                if (ra == 1){
+
+                    Toast.makeText(RegisterActivity.this, "registro completo", Toast.LENGTH_SHORT).show();
+                    new hiloegistrar().execute();
+                }
             }
         });
+
         // Agregar listener para seleccionar una imagen de usuario
         imageViewIcono.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,21 +128,17 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        //hilo.run();
-
     }
-    public class HiloRegistrar extends Thread{
+
+    public class hiloegistrar extends AsyncTask<String,Void,Usuario>{
         @Override
-        public void run() {
-            super.run();
+        protected Usuario doInBackground(String... strings) {
             try {
                 Conexion conexion = new Conexion();
                 int ra = conexion.insertarUsuario(usuario);
                 if(ra == 1 )
                 {
-                    Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+                    Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
                     startActivity(intent);
                 }
             } catch (ExcepcionBP e) {
@@ -136,6 +146,8 @@ public class RegisterActivity extends AppCompatActivity {
             } catch (ExcepcionBPComunicaciones e) {
                 throw new RuntimeException(e);
             }
+            return null;
         }
+
     }
 }
