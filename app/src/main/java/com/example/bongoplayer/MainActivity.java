@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        //new hiloSubircanciones().execute();
+        new hiloSubircanciones().execute();
 
         playPausa = findViewById(R.id.buttonPlayPause);
         sig = findViewById(R.id.buttonSig);
