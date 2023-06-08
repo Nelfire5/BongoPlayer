@@ -22,4 +22,9 @@
         android:name="com.example.bongoplayer.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/playListFragment2"
+        android:name="com.example.bongoplayer.PlayListFragment"
+        android:label="fragment_play_list"
+        tools:layout="@layout/fragment_play_list" />
 </navigation>

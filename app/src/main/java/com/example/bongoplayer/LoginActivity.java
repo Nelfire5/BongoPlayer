@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                     {
                         Toast.makeText(LoginActivity.this, "Login correcto :D", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.putExtra("usuarioID",user.getUsuarioId());
                         startActivity(intent);
                     }
                     else if(ra == 0){

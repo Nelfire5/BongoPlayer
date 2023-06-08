@@ -3,6 +3,7 @@ package com.example.bongoplayer;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.MediaPlayer;
@@ -32,6 +33,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.bongoplayer.databinding.ActivityMainBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -72,13 +74,15 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         // -------------------------------------------------------------------------
         // -------------------------------------------------------------------------
 
         checkPermissionAndListFiles();
+
+        //ArrayList<CancionModel> canciones1 = (ArrayList<CancionModel>) getIntent().getSerializableExtra("listaReproducir");
 
         for(int i=0; i<canciones.size();i++)
         {
@@ -102,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
 
         txtNombre = findViewById(R.id.txtCancion);
         txtArtista = findViewById(R.id.txtArtista);
-        seekBar = findViewById(R.id.seekBar);
 
         txtNombre.setText(canciones.get(posicion).getNombre());
         txtArtista.setText(canciones.get(posicion).getArtista());
@@ -110,10 +113,17 @@ public class MainActivity extends AppCompatActivity {
         txtArtista.setSelected(true);
         txtNombre.setSelected(true);
 
-        seekBar.setMax(vectormp.get(posicion).getDuration());
-
 
         new hiloreproductor().execute();
+
+        FloatingActionButton floatingActionButton = findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CrearListaActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public class hiloreproductor extends AsyncTask<String,Void,Void> {
@@ -175,8 +185,6 @@ public class MainActivity extends AppCompatActivity {
         vectormp.get(posicion).start();
         playPausa.setImageResource(R.drawable.pausa);
         Toast.makeText(this, "Play", Toast.LENGTH_SHORT).show();
-        UpdateSeekBar updateSeekBar = new UpdateSeekBar();
-        handler.post(updateSeekBar);
     }
 
     public void pausa(View view)
@@ -307,14 +315,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
             }
-        }
-    }
-
-    public class UpdateSeekBar implements Runnable{
-        @Override
-        public void run() {
-            seekBar.setProgress(vectormp.get(posicion).getCurrentPosition());
-            handler.postDelayed(this,100);
         }
     }
 

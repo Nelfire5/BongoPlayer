@@ -47,7 +47,6 @@ dependencies {
     implementation files('libs/ojdbc11.jar')
     implementation files('libs/BongoPlayerPOJO.jar')
     implementation files('libs/BongoPlayerPOJOComunicaciones.jar')
-    implementation files('libs/BongoPlayerCAD.jar')
 
 
     implementation "androidx.cardview:cardview:1.0.0"

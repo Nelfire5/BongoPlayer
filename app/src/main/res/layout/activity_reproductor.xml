@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".ReproductorActivity">
+
+    <ImageButton
+        android:id="@+id/atras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparente"
+        android:padding="10dp"
+        android:backgroundTint="@color/transparente"
+        app:srcCompat="@drawable/flecha_atras" />
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/icon_musica2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"/>
+
+    <LinearLayout
+        android:id="@+id/controlLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+        <!-- Texto de la canción -->
+        <TextView
+            android:id="@+id/txtCancion"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Nombre"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:padding="5dp"
+            android:ellipsize="marquee"
+            android:focusable="false"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            />
+
+        <!-- Texto del artista -->
+        <TextView
+            android:id="@+id/txtArtista"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Artista"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:padding="5dp"
+            android:ellipsize="marquee"
+            android:focusable="false"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"/>
+    </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:progress="0"
+        android:max="100"
+        android:progressTint="@color/black"
+        android:thumbTint="#000000"
+        android:layout_below="@id/controlLayout1"
+        android:layout_marginTop="20dp" />
+
+    <LinearLayout
+        android:id="@+id/controlLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/seekBar"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true">
+
+        <ImageButton
+            android:id="@+id/buttonBucle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparente"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/repetiroff"
+            tools:layout_editor_absoluteX="134dp"
+            tools:layout_editor_absoluteY="78dp" />
+
+        <ImageButton
+            android:id="@+id/buttonPlayPause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparente"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/play"
+            tools:layout_editor_absoluteX="134dp"
+            tools:layout_editor_absoluteY="78dp"
+            />
+
+        <ImageButton
+            android:id="@+id/buttonStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparente"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/detener"
+            tools:layout_editor_absoluteX="134dp"
+            tools:layout_editor_absoluteY="78dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

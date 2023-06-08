@@ -20,6 +20,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
+
     <fragment
         android:id="@+id/nav_host_fragment_activity_main"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -27,62 +28,74 @@
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@id/nav_view"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:navGraph="@navigation/mobile_navigation" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/agregar"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/white"/>
+
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/nav_view"
-        android:background="#FFFFFF">
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/nav_view">
 
         <!-- Texto de la canción -->
         <TextView
             android:id="@+id/txtCancion"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:text="Nombre"
-            android:textSize="20sp"
-            android:textColor="@color/black"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:padding="5dp"
             android:ellipsize="marquee"
             android:focusable="false"
             android:marqueeRepeatLimit="marquee_forever"
+            android:padding="5dp"
             android:scrollHorizontally="true"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:text="Nombre"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <!-- Texto del artista -->
         <TextView
             android:id="@+id/txtArtista"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:text="Artista"
-            android:textSize="12sp"
-            android:textColor="@color/black"
-            android:layout_alignParentStart="true"
             android:layout_below="@id/txtCancion"
-            android:padding="5dp"
+            android:layout_alignParentStart="true"
             android:ellipsize="marquee"
             android:focusable="false"
             android:marqueeRepeatLimit="marquee_forever"
+            android:padding="5dp"
             android:scrollHorizontally="true"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:text="Artista"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
 
         <!-- Controles de reproducción -->
         <LinearLayout
             android:id="@+id/controlLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/bucle"
@@ -124,22 +137,6 @@
                 tools:layout_editor_absoluteX="134dp"
                 tools:layout_editor_absoluteY="78dp" />
         </LinearLayout>
-
-        <!-- Barra de progreso -->
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:progress="0"
-            android:max="100"
-            android:progressTint="@color/black"
-            android:thumbTint="@color/white"
-            android:thumb="@color/black"
-            android:layout_below="@id/controlLayout"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp" />
 
     </RelativeLayout>
 

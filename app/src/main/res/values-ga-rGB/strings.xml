@@ -4,4 +4,5 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Music</string>
     <string name="title_notifications">Settings</string>
+    <string name="icono">Elige un icono</string>
 </resources>

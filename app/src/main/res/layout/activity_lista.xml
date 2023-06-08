@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ListaActivity">
+
+    <ImageButton
+        android:id="@+id/atras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/transparente"
+        android:backgroundTint="@color/transparente"
+        android:padding="10dp"
+        app:srcCompat="@drawable/flecha_atras" />
+
+
+    <LinearLayout
+        android:id="@+id/controlLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/atras"
+        android:layout_marginTop="2dp"
+        android:gravity="left"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageViewLista"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_below="@+id/atras"
+            android:layout_margin="10dp"
+            android:src="@drawable/nota_negra" />
+
+
+        <!-- Texto de la canción -->
+        <TextView
+            android:id="@+id/txtNombreLista"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="15dp"
+            android:text="Nombre Lista"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="50sp" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/Recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/controlLayout"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="15dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginRight="40dp"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/play"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</RelativeLayout>

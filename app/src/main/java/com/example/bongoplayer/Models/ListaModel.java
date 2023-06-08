@@ -1,9 +1,12 @@
 package com.example.bongoplayer.Models;
 
-import android.widget.ImageView;
+import android.graphics.drawable.Drawable;
 
-public class ListaModel {
+import java.io.Serializable;
 
+public class ListaModel implements Serializable {
+
+    private int id;
     private String nombre;
     private int icono;
     private String Usuario_ID;
@@ -11,7 +14,8 @@ public class ListaModel {
     public ListaModel() {
     }
 
-    public ListaModel(String nombre, int icono, String usuario_ID) {
+    public ListaModel(int id, String nombre, int icono, String usuario_ID) {
+        this.id = id;
         this.nombre = nombre;
         this.icono = icono;
         Usuario_ID = usuario_ID;
@@ -46,11 +50,20 @@ public class ListaModel {
         Usuario_ID = usuario_ID;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "ListaModel{" +
-                "nombre='" + nombre + '\'' +
-                ", icono='" + icono + '\'' +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", icono=" + icono +
                 ", Usuario_ID='" + Usuario_ID + '\'' +
                 '}';
     }

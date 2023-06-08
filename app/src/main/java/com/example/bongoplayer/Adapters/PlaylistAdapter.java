@@ -1,5 +1,6 @@
 package com.example.bongoplayer.Adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,24 +9,24 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bongoplayer.Models.ListaModel;
 import com.example.bongoplayer.R;
 
 import java.util.List;
 
-import bongoplayerpojo.Lista;
-
 public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHolder> {
 
-    private List<Lista> playlists;
-    private OnItemClickListener clickListener;
+    Context context;
+    private List<ListaModel> playlists;
+    private OnItemClickListener value;
 
     public interface OnItemClickListener {
-        void onItemClick(Lista playlist);
+        void onItemClick(ListaModel playlist);
     }
 
-    public PlaylistAdapter(List<Lista> playlists, OnItemClickListener clickListener) {
+    public PlaylistAdapter(List<ListaModel> playlists, Context context) {
         this.playlists = playlists;
-        this.clickListener = clickListener;
+        this.context = context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -40,7 +41,8 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    clickListener.onItemClick(playlists.get(getAdapterPosition()));
+                    value.onItemClick(playlists.get(getAdapterPosition()));
+
                 }
             });
         }
@@ -54,13 +56,54 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Lista playlist = playlists.get(position);
-        holder.imageView.setImageResource(Integer.parseInt(playlist.getIconoLista()));
-        holder.textView.setText(playlist.getNombreLista());
+        ListaModel playlist = playlists.get(position);
+        holder.imageView.setImageResource(ponerIcono(playlists.get(position)));
+        holder.textView.setText(playlist.getNombre());
     }
 
     @Override
     public int getItemCount() {
         return playlists.size();
     }
+
+    private int ponerIcono(ListaModel lista) {
+
+        int drawable;
+
+        switch (lista.getIcono()){
+
+            case 0:
+                drawable = R.drawable.nota_negra;
+                break;
+            case 1:
+                drawable = R.drawable.nota_amarilla;
+                break;
+            case 2:
+                drawable = R.drawable.nota_naranja;
+                break;
+            case 3:
+                drawable = R.drawable.nota_verde;
+                break;
+            case 4:
+                drawable = R.drawable.nota_azul;
+                break;
+            case 5:
+                drawable = R.drawable.nota_cian;
+                break;
+            case 6:
+                drawable = R.drawable.nota_morada;
+                break;
+            case 7:
+                drawable = R.drawable.nota_roja;
+                break;
+            case 8:
+                drawable = R.drawable.nota_rosa;
+                break;
+            default:
+                drawable = R.drawable.nota_negra;
+                break;
+        }
+        return drawable;
+    }
 }
+

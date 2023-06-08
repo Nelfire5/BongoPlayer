@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/texto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Crear nueva lista"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/nombreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:layout_below="@+id/texto"
+        android:text="Nombre"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/nombreEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nombreTextView"
+        android:layout_marginTop="8dp"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/iconoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nombreEditText"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
+        android:text="Icono"
+        android:textSize="20sp" />
+
+    <Spinner
+        android:id="@+id/iconoSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iconoTextView"
+        android:layout_marginTop="10dp"
+        android:spinnerMode="dialog"
+        android:prompt="@string/icono"/>
+
+    <ImageView
+        android:id="@+id/iconoImageView"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/iconoSpinner"
+        android:layout_marginTop="30dp"
+        android:contentDescription="Icono seleccionado" />
+
+    <Button
+        android:id="@+id/aceptarButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Guardar"
+        android:textSize="25sp"
+        android:backgroundTint="@color/black"/>
+
+</RelativeLayout>

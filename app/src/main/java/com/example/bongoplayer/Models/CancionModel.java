@@ -19,6 +19,14 @@ public class CancionModel implements Serializable {
         this.nombre = nombre;
         this.artista = artista;
     }
+
+    public CancionModel(String nombre, String artista, String ruta)
+    {
+        this.nombre = nombre;
+        this.artista = artista;
+        this.ruta = ruta;
+    }
+
     public CancionModel(String id, String nombre, String artista, String album, String duracion, String ruta) {
         this.id = id;
         this.nombre = nombre;

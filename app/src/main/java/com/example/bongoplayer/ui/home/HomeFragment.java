@@ -1,32 +1,33 @@
 package com.example.bongoplayer.ui.home;
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bongoplayer.Adapters.ImageAdapter;
 import com.example.bongoplayer.Conexion.Conexion;
+import com.example.bongoplayer.ListaActivity;
 import com.example.bongoplayer.Models.ListaModel;
 import com.example.bongoplayer.R;
+import com.example.bongoplayer.ReproductorActivity;
 import com.example.bongoplayer.databinding.FragmentHomeBinding;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import bongoplayerpojo.ExcepcionBP;
 import bongoplayerpojo.Lista;
-import bongoplayerpojo.Usuario;
 import bongoplayerpojocomunicaciones.ExcepcionBPComunicaciones;
 
 public class HomeFragment extends Fragment {
@@ -36,6 +37,8 @@ public class HomeFragment extends Fragment {
     private ImageAdapter adapter;
 
     ArrayList<ListaModel> listas = new ArrayList<>();
+
+    List<Drawable> iconos;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,16 +51,42 @@ public class HomeFragment extends Fragment {
         //------------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------
 
+        // Cargar los iconos en la lista
+        iconos = new ArrayList<>();
+        iconos.add(getResources().getDrawable(R.drawable.nota_negra));
+        iconos.add(getResources().getDrawable(R.drawable.nota_amarilla));
+        iconos.add(getResources().getDrawable(R.drawable.nota_naranja));
+        iconos.add(getResources().getDrawable(R.drawable.nota_verde));
+        iconos.add(getResources().getDrawable(R.drawable.nota_azul));
+        iconos.add(getResources().getDrawable(R.drawable.nota_cian));
+        iconos.add(getResources().getDrawable(R.drawable.nota_morada));
+        iconos.add(getResources().getDrawable(R.drawable.nota_roja));
+        iconos.add(getResources().getDrawable(R.drawable.nota_rosa));
+
         new hiloListas().execute();
 
         gridView = root.findViewById(R.id.gridView);
         adapter = new ImageAdapter(getContext(),listas);
         gridView.setAdapter(adapter);
 
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                ListaModel selectedItem = listas.get(position);
+
+                Intent intent = new Intent(getContext(), ListaActivity.class);
+                intent.putExtra("lista", selectedItem);
+                startActivity(intent);
+            }
+        });
+
+
 
 
         return root;
     }
+
 
     public class hiloListas extends AsyncTask<String, Void, Integer> {
         @Override
@@ -71,14 +100,15 @@ public class HomeFragment extends Fragment {
                 for(int i =0; i<listListas.size();i++)
                 {
                     ListaModel lista = new ListaModel();
+                    lista.setId(listListas.get(i).getListaId());
                     lista.setNombre(listListas.get(i).getNombreLista());
+
                     if(listListas.get(i).getIconoLista() != null)
                     {
                         lista.setIcono(Integer.parseInt(listListas.get(i).getIconoLista()));
                     }
-                    lista.setUsuario_ID(String.valueOf(listListas.get(i).getUsuario().getUsuarioId()));
-
                     Log.e("lista",lista.toString());
+
                     listas.add(lista);
                 }
 

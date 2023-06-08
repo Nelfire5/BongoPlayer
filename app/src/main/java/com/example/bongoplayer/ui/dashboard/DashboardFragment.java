@@ -1,13 +1,9 @@
 package com.example.bongoplayer.ui.dashboard;
 
 
-import android.annotation.SuppressLint;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,19 +16,27 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bongoplayer.Adapters.CancionAdapter;
+import com.example.bongoplayer.Conexion.Conexion;
 import com.example.bongoplayer.Models.CancionModel;
 import com.example.bongoplayer.R;
+import com.example.bongoplayer.ReproductorActivity;
 import com.example.bongoplayer.databinding.FragmentDashboardBinding;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import bongoplayerpojo.Cancion;
+import bongoplayerpojo.ExcepcionBP;
+import bongoplayerpojocomunicaciones.ExcepcionBPComunicaciones;
 
 public class DashboardFragment extends Fragment implements CancionAdapter.OnItemClickListener{
 
     private FragmentDashboardBinding binding;
+    ArrayList<Cancion> listCanciones = new ArrayList<>();
     ArrayList<CancionModel> canciones = new ArrayList<>();
+
+    int ra=0;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -44,14 +48,21 @@ public class DashboardFragment extends Fragment implements CancionAdapter.OnItem
         // ---------------------------------------------------------------------------------------
         // ---------------------------------------------------------------------------------------
 
-        buscarCanciones();
+        try {
+            ra = new hiloCanciones().execute().get();
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.Recycler);
-        CancionAdapter cancionAdapter = new CancionAdapter((List<CancionModel>) canciones,getContext(), (CancionAdapter.OnItemClickListener) this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        recyclerView.setAdapter(cancionAdapter);
-
+        if(ra ==1) {
+            RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.Recycler);
+            CancionAdapter cancionAdapter = new CancionAdapter((List<CancionModel>) canciones, getContext(), (CancionAdapter.OnItemClickListener) this);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+            recyclerView.setAdapter(cancionAdapter);
+        }
 
         return root;
     }
@@ -65,37 +76,41 @@ public class DashboardFragment extends Fragment implements CancionAdapter.OnItem
     @Override
     public void onItemClick(CancionModel cancionModel) {
         Log.e("cancionModel clicked", cancionModel.toString());
+
+        Intent intent = new Intent(getContext(), ReproductorActivity.class);
+        intent.putExtra("cancion", cancionModel);
+        startActivity(intent);
+
     }
 
+    public class hiloCanciones extends AsyncTask<String, Void, Integer> {
+        @Override
+        protected Integer doInBackground(String... strings) {
 
+            try {
+                Conexion conexion = new Conexion();
+                listCanciones = conexion.leerCanciones();
 
-
-
-    public void buscarCanciones() {
-
-        ContentResolver contentResolver = getActivity().getContentResolver();
-        Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor cursor = contentResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
-        int id=0;
-
-        while (cursor.moveToNext()) {
-            @SuppressLint("Range") String nombre = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
-            @SuppressLint("Range") String artista = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
-            @SuppressLint("Range") String album = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
-            id++;
-            String string_id = String.valueOf(id);
-
-            @SuppressLint("Range") String ruta = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
-            @SuppressLint("Range") long duracion = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
-
-            SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
-            String string_duracion = sdf.format(new Date(duracion));
-            CancionModel cancionModel = new CancionModel(string_id, nombre, artista, album, string_duracion, ruta);
-
-            if(cancionModel.getRuta().endsWith(".mp3"))
-            {
-                canciones.add(cancionModel);
+                canciones = new ArrayList<>();
+                for (int i=0; i<listCanciones.size();i++)
+                {
+                    CancionModel cancion = new CancionModel();
+                    cancion.setId(String.valueOf(listCanciones.get(i).getCancionId()));
+                    cancion.setNombre(listCanciones.get(i).getNombre());
+                    cancion.setArtista(listCanciones.get(i).getArtista());
+                    cancion.setDuracion(listCanciones.get(i).getDuracion());
+                    cancion.setRuta(listCanciones.get(i).getArchivo());
+                    Log.e("canciones", cancion.toString());
+                    canciones.add(cancion);
+                }
+                ra =1;
+            } catch (ExcepcionBP e) {
+                throw new RuntimeException(e);
+            } catch (ExcepcionBPComunicaciones e) {
+                throw new RuntimeException(e);
             }
+            return ra;
         }
     }
+
 }

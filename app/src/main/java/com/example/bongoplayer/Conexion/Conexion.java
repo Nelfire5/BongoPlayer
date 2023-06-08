@@ -360,4 +360,91 @@ public class Conexion extends Thread{
         }*/
         return null;
     }
+
+    public Integer insertarLista(Lista lista) throws ExcepcionBP, ExcepcionBPComunicaciones {
+
+        try {
+            String equipoServidor = "192.168.1.27";
+            int puertoServidor = 30500;
+            Socket socketCliente = new Socket(equipoServidor, puertoServidor);
+
+            ObjectOutputStream oos = new ObjectOutputStream(socketCliente.getOutputStream());
+            Peticion peticion = new Peticion(Peticion.INSERTAR_LISTA, lista);
+            oos.writeObject(peticion);
+
+            ObjectInputStream ois = new ObjectInputStream(socketCliente.getInputStream());
+            Object respuesta = (Object) ois.readObject();
+
+            ois.close();
+            oos.close();
+            if(respuesta.equals(1)){
+
+                Integer registrosAfectados = (Integer) respuesta;
+                Log.e("respuesta", respuesta.toString());
+                return registrosAfectados;
+            }
+            else if (respuesta.equals(0)){
+
+                ExcepcionBP e = (ExcepcionBP) respuesta;
+                throw e;
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Log class not found excepcion"+ex.getMessage());
+            ExcepcionBPComunicaciones e = new ExcepcionBPComunicaciones();
+            e.setMemensajeErrorAdmin(ex.getMessage());
+            e.setMemensajeErrorUser("Error general del sistema");
+            throw e;
+
+        }
+        return null;
+    }
+
+    public ArrayList<Lista_Cancion> leerListasCanciones() throws ExcepcionBP, ExcepcionBPComunicaciones{
+
+        try {
+            String equipoServidor = "192.168.1.27";
+            int puertoServidor = 30500;
+            Socket socketCliente = new Socket(equipoServidor, puertoServidor);
+
+            ObjectOutputStream oos = new ObjectOutputStream(socketCliente.getOutputStream());
+            Peticion peticion = new Peticion(Peticion.LEER_LISTAS_CANCIONES);
+            oos.writeObject(peticion);
+
+            ObjectInputStream ois = new ObjectInputStream(socketCliente.getInputStream());
+            Object respuesta = ois.readObject();
+            //Log.e("aqui",respuesta.toString());
+
+            ois.close();
+            oos.close();
+
+            if(!respuesta.equals(null)){
+
+                ArrayList<Lista_Cancion> listas = (ArrayList<Lista_Cancion>) respuesta;
+                return listas;
+            }
+            else if (respuesta.equals(null)){
+
+                ExcepcionBP e = (ExcepcionBP) respuesta;
+                throw e;
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Log class not found excepcion"+ex.getMessage());
+            ExcepcionBPComunicaciones e = new ExcepcionBPComunicaciones();
+            e.setMemensajeErrorAdmin(ex.getMessage());
+            e.setMemensajeErrorUser("Error general del sistema");
+            throw e;
+
+        } /*catch (ExcepcionBPComunicaciones ex) {
+            System.out.println("Log IO exception" + ex.getMessage());
+            ExcepcionBPComunicaciones e = new ExcepcionBPComunicaciones();
+            e.setMemensajeErrorAdmin(ex.getMessage());
+            e.setMemensajeErrorUser("No se ha podido establecer la conexion a la red. Revise su conexion");
+            throw e;
+        }*/
+        return null;
+    }
 }

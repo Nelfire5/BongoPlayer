@@ -21,9 +21,9 @@ public class CancionAdapter  extends RecyclerView.Adapter<CancionAdapter.ViewHol
     private List<CancionModel> lista;
     private LayoutInflater inflater;
     private Context context;
-
     private OnItemClickListener value;
 
+    int aux;
 
     public interface OnItemClickListener {
         void onItemClick(CancionModel cancionModel);
@@ -33,6 +33,14 @@ public class CancionAdapter  extends RecyclerView.Adapter<CancionAdapter.ViewHol
         this.lista = lista;
         this.context = context;
         this.value = value;
+        aux = 1;
+    }
+
+    public CancionAdapter(List<CancionModel> lista, Context context) {
+        this.inflater = LayoutInflater.from(context);
+        this.lista = lista;
+        this.context = context;
+        aux = 0;
     }
 
     @NonNull
@@ -46,13 +54,15 @@ public class CancionAdapter  extends RecyclerView.Adapter<CancionAdapter.ViewHol
     @Override
     public void onBindViewHolder(@NonNull CancionAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.bindData(lista.get(position));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                value.onItemClick(lista.get(position));
-            }
-        });
 
+        if(aux == 1) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    value.onItemClick(lista.get(position));
+                }
+            });
+        }
     }
 
     @Override
