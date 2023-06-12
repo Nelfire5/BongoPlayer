@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="Crear nueva lista"
-        android:textSize="50sp"
+        android:textSize="40sp"
         android:textStyle="bold"
         android:textColor="@color/black"/>
 

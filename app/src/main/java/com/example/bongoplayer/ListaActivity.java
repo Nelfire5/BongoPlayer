@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.media.MediaParser;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,6 +42,8 @@ public class ListaActivity extends AppCompatActivity {
     ArrayList<Lista_Cancion> lista_canciones = new ArrayList<>();
     ArrayList<CancionModel> canciones = new ArrayList<>();
 
+    ArrayList<MediaPlayer> mediaPlayers = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,9 +62,14 @@ public class ListaActivity extends AppCompatActivity {
 
         if(lista.getId() == 1)
         {
-            canciones.add(new CancionModel("Kicks","Barns Courtney - Topic","/storage/emulated/0/snaptube/download/SnapTube Audio/Kicks(MP3_128K).mp3"));
-            canciones.add(new CancionModel("Findlay - Off & On (Official Video)","Findlay","/storage/emulated/0/snaptube/download/SnapTube Audio/Findlay - Off _ On (Official Video)(MP3_128K).mp3"));
+            canciones.add(new CancionModel("Eminem - Lose Yourself [HD]","Eminem"));
+            canciones.add(new CancionModel("Till I Collapse","Eminem"));
+
+            mediaPlayers.add(MediaPlayer.create(this,R.raw.lose_yourself));
+            mediaPlayers.add(MediaPlayer.create(this,R.raw.till_i_collapse));
+
         }
+
 
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.Recycler);
@@ -82,7 +91,6 @@ public class ListaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ListaActivity.this, MainActivity.class);
-                intent.putExtra("listaReproducir", canciones);
                 startActivity(intent);
             }
         });

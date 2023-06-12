@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.bongoplayer.Conexion.Conexion;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import bongoplayerpojo.ExcepcionBP;
 import bongoplayerpojo.Usuario;
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     Usuario user = new Usuario();
 
     int ra;
+    int ra2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,17 +58,24 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(ra == 1)
                 {
-                    new hilologin().execute();
-                    if (ra == 1)
+                    int aux = -1;
+                    try {
+                        aux = new hilologin().execute().get();
+                    } catch (ExecutionException e) {
+                        throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    if (aux == 1)
                     {
                         Toast.makeText(LoginActivity.this, "Login correcto :D", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         intent.putExtra("usuarioID",user.getUsuarioId());
                         startActivity(intent);
                     }
-                    else if(ra == 0){
+                    else if(aux == 0){
                         Toast.makeText(LoginActivity.this, "Credenciales incorrectas!", Toast.LENGTH_SHORT).show();
-                        ra = -1;
+                        aux = -1;
                     }
                 }
             }
@@ -92,9 +101,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 for(int i =0; i<usuarios.size();i++)
                 {
-                    if(user.getCorreo().equals(usuarios.get(i).getCorreo()) || user.getContrasena().equals(usuarios.get(i).getContrasena())) {
-                        ra = 1;
-                        return null;
+                    String contraaux = usuarios.get(i).getContrasena();
+                    Log.e("contra",contraaux);
+                    if(user.getCorreo().equals(usuarios.get(i).getCorreo()) && user.getContrasena().equals(contraaux)) {
+                        ra2 = 1;
+                        return ra2;
                     }
                 }
 
@@ -103,8 +114,8 @@ public class LoginActivity extends AppCompatActivity {
             } catch (ExcepcionBPComunicaciones e) {
                 throw new RuntimeException(e);
             }
-            ra = 0;
-            return null;
+            ra2 = 0;
+            return ra2;
         }
     }
 

@@ -57,8 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView txtNombre;
     TextView txtArtista;
-    SeekBar seekBar;
-    Handler handler = new Handler();
+    int ra = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
         checkPermissionAndListFiles();
 
-        //ArrayList<CancionModel> canciones1 = (ArrayList<CancionModel>) getIntent().getSerializableExtra("listaReproducir");
 
         for(int i=0; i<canciones.size();i++)
         {
@@ -97,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        new hiloSubircanciones().execute();
 
         playPausa = findViewById(R.id.buttonPlayPause);
         sig = findViewById(R.id.buttonSig);
@@ -124,6 +121,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        ArrayList<MediaPlayer> mpAux = (ArrayList<MediaPlayer>) getIntent().getSerializableExtra("listaReproducir");
+        if(mpAux != null)
+        {
+            Log.e("mpAux",mpAux.toString());
+        }
     }
 
     public class hiloreproductor extends AsyncTask<String,Void,Void> {
@@ -274,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
                     REQUEST_PERMISSION);
         } else {
             buscarCanciones();
+            new hiloSubircanciones().execute();
         }
     }
 
